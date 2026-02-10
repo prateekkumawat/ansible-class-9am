@@ -1,0 +1,15 @@
+---
+- name: create a file and dump content 
+  hosts: all 
+  tasks: 
+
+    - name: create a file 
+      file: 
+        path: /tmp/test_file
+        state: touch 
+
+    - name: add content in file 
+      lineinfile:
+        path: /tmp/test_file 
+        line: "Hello Ansible Playbook Test" 
+          

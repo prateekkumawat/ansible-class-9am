@@ -1,0 +1,27 @@
+---         #  --- start your yaml file compulsary for ansible 
+- name: example playbook    # --- define your playbook name purpose or target of uses 
+  hosts: all, ip            # --- hosts define on which node this will run and hosts is based on inventory 
+  tasks:                    # --- start define your play and task step which you want to perform 
+
+    - name: my first play   # --- this will define your task step name is just indicator help in troubleshoot 
+      yum:                  # --- ansible module name that define according task " ansible-doc -l" "ansible-doc yum " use these command for help 
+        name: httpd         # --- define options according to modules 
+        state: latest       
+
+    - name: my sec. play    
+      debug: 
+        msg: "Hello msg running" 
+
+
+
+ # ansible is a sequnsital modal 
+ # ansible is following top to bottom approch follow when read yaml 
+ # tasks sesction all task define that called play 
+ # all plays perform and achive your goal that collection called playbook 
+ # ansible-playbook playbook1.yaml that command help to excute this play 
+ # in ansible most of module based on commands like yum copy file service firewalld etc.
+ #  userstory1 ::: 
+ #  create a playbook play1.yaml that will create a blank file in /tmp/test_file and provide data "Hello Ansible contenct in that" 
+ #
+ #  task1: create a playbook for install httpd vim firewalld and podman package using yum module and start enable  podman and httpd services use service module.
+ #  task2: create a /tmp/test123 and line in file "hello test plabooks"  
