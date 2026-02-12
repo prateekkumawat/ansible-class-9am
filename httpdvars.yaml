@@ -1,0 +1,27 @@
+---
+- name: setup html content 
+  hosts: 192.168.78.130 
+  vars_files:
+    - httpdvarsfile.yaml
+  tasks: 
+
+    - name: install {{ pkg }} 
+      yum: 
+        name: "{{ pkg }}"
+        state: present 
+
+    - name: create html content path {{ filepath }}
+      file: 
+        path:  "/var/www/html/{{ filepath }}"
+        state: touch 
+
+    - name: enter content in file 
+      lineinfile: 
+        path: "/var/www/html/{{ filepath }}"
+        line: "{{ content }}"  
+
+    - name: start {{ pkg }} service 
+      service: 
+        name: "{{ pkg }}"
+        state: started 
+        enabled: true       

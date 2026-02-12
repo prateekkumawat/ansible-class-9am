@@ -1,0 +1,12 @@
+---
+- name: learning variables 
+  hosts: 192.168.78.130 
+  vars: 
+    pkgs: 
+      - vsftpd
+  tasks: 
+
+    - name: install {{ pkgs }} 
+      yum:
+        name: "{{ pkgs }}"
+        state: latest 

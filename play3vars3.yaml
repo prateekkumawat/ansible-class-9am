@@ -1,0 +1,16 @@
+---
+- name: learning variables 
+  hosts: 192.168.78.130 
+  vars_files:
+    - play3varfile.yaml
+  tasks: 
+
+    - name: install {{ pkgs }} 
+      yum:
+        name: "{{ pkgs }}"
+        state: latest 
+
+    - name: create dir on path {{ srcpath }}
+      file: 
+        path: "{{ srcpath }}" 
+        state: directory      
