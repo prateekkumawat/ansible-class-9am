@@ -1,0 +1,46 @@
+---
+- name: define playbook for loop example 
+  hosts: 192.168.78.130 
+  vars: 
+    data1: 
+      - /tmp/data1
+      - /tmp/data2
+      - /tmp/data3 
+  tasks: 
+
+    - name: define loop playbook 
+      file: 
+        path: "{{ item }}"
+        state: directory 
+      loop: 
+        - /tmp/test1
+        - /tmp/test2
+        - /tmp/test3 
+
+    - name: Install yum packages 
+      yum: 
+        name: "{{ item }}"
+        state: latest 
+      loop:
+        - httpd 
+        - vim 
+        - firewalld 
+         
+    - name: create a dir using variable 
+      file: 
+        path: "{{ item }}" 
+        state: directory       
+      loop: 
+        - "{{ data1 }}" 
+
+    - name: create user using variables 
+      user: 
+        name: "{{ item }}"
+        state: present 
+        shell: /sbin/nologin 
+      loop: 
+        - qa 
+        - dev 
+        - test 
+          
+          
