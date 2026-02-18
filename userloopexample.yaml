@@ -1,0 +1,45 @@
+---
+- name: loop with variable with various value itrates 
+  hosts: 192.168.78.130 
+  vars: 
+    grouproles:
+      - manager 
+      - developer
+      - testing
+    userroles: 
+      - uname: raj 
+        uuid: 11001
+        ucomment: "Raj Singh"
+        ugroup: manager
+        upasswd: "redhat"
+      - uname: shital
+        uuid: 11003
+        ucomment: "Shital Devops"
+        ugroup: developer
+        upasswd: "redhat"
+      - uname: biren
+        uuid: 11005 
+        ucomment: "Biren trial"
+        ugroup: testing
+        upasswd: "redhat"  
+  tasks: 
+
+    - name: create a group 
+      group: 
+        name: "{{ item }}"
+        state: present 
+      loop:  "{{ grouproles }}"  
+    
+    - name: create users using itrate loop values 
+      user: 
+        name: "{{ item.uname }}"
+        groups: "{{ item.ugroup }}" 
+        uid: "{{ item.uuid }}" 
+        comment: "{{ item.ucomment }}" 
+        shell: /sbin/nologin
+        password: "{{ item.upasswd | password_hash('sha512') }}"
+        state: present 
+      loop: "{{ userroles }}" 
+
+
+
