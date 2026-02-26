@@ -27,3 +27,5 @@
  #  task2: create a /tmp/test123 and line in file "hello test plabooks"  
  #  task3: setup a webserver using nginx and run with content "Hello I am nginx weberver." 
  #  allow firewall rules over all machine http, ssh, nfs, 8090 8080 8050 allow and after this remove port from firewalld 
+ #  condition:::: 
+ #  a < b ; a > b ; a != b ; a == b ; a is define or a is not define ; a > b and a > c  ; a < b or b < c 

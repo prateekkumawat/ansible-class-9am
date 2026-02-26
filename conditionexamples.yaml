@@ -1,0 +1,48 @@
+---
+- name: learning condition examples 
+  hosts: 192.168.78.130  
+  vars: 
+    test: value1 
+    path1: /tmp/nginxtest 
+  ignore_errors: true
+  tasks: 
+
+    - name: print msg 
+      debug: 
+        msg: "Hello Msg Ansible Condition true print" 
+      when: test is defined 
+
+    - name: print msg 2 
+      debug:
+        msg: "Test variable is not define" 
+      when: test is not defined
+
+    - name: check {{ path1 }} is exist 
+      stat: 
+        path: "{{ path1 }}" 
+      register: file_status 
+
+    - name: print file_status register ( dev purpose ) 
+      debug:     
+        var: file_status
+
+    - name: when files not exist create 
+      file: 
+        path: "{{ path1 }}"
+        state: touch 
+      when: not file_status.stat.exists
+
+    - name: install package 
+      yum: 
+        name: httpd 
+        state: latest 
+      register: package_install 
+
+    - name: print register ( dev only )
+      debug: 
+        var: package_install
+
+    - name: print msg 
+      debug: 
+        msg: "please check your package or yum repo" 
+      when: package_install.rc == 1   

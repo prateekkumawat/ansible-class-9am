@@ -1,0 +1,15 @@
+---
+- name: use and define your facts 
+  hosts: 192.168.230.128 
+  tasks: 
+
+    - name: create a file 
+      file: 
+        path: /tmp/hw_report.txt 
+        state: touch
+
+    - name: collection of facts 
+      lineinfile: 
+        path: /tmp/hw_report.txt 
+        line: " THis is fact collection on machine hostname is {{ ansible_hostname }} IP ADDRESS {{ ansible_default_ipv4.address }} Amount of CPU {{ ansible_processor_vcpus }} Memory is {{ ansible_memory_mb.real.total }} "      
+

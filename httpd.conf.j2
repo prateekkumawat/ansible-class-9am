@@ -1,0 +1,8 @@
+<virtualhost {{ ansible_default_ipv4.address }}:{{ httpd_port_number }}> 
+servername  {{ ansible_hostname }} 
+documentroot {{ httpd_web_path }} 
+</virtualhost }}>
+
+<directory {{ httpd_web_path }}> 
+require all granted 
+</directory>

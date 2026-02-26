@@ -1,0 +1,33 @@
+---
+- name: test temdplate base playbook 
+  hosts: 192.168.78.131 
+  vars: 
+    httpd_port_number: 80
+    httpd_web_path: /var/www/webpath
+  gather_facts: true
+  tasks:
+
+    - name: create webpath 
+      file: 
+        path: "{{ httpd_web_path }}" 
+        state: directory 
+      register: webpath_out 
+
+    - name: create index.html 
+      file: 
+        path: "{{ httpd_web_path }}/index.html"
+        state: touch 
+
+    - name:  create content in file 
+      lineinfile: 
+        line: "<h2><b> This is Manage By Ansible IPADRESS HOST  {{ ansible_default_ipv4.address }} </b></h2>"
+        path: "{{ httpd_web_path }}/index.html"
+
+    - name: copy your template 
+      template: 
+        src: httpd.conf.j2 
+        dest: "{{ httpd_web_path }}/httpd.conf"
+         
+    - name: display register output 
+      debug: 
+        var: webpath_out      
