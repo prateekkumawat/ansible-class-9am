@@ -1,0 +1,35 @@
+---
+- name: condition imporved with loop 
+  hosts: 192.168.78.130 
+  vars: 
+    package: 
+      - ex294 
+      - rh294 
+    service: 
+      ansible-exam.service
+  ignore_errors: true
+  tasks: 
+
+    - name: Install packages {{ package }}
+      yum: 
+        name: "{{ item }}" 
+        state: present 
+      register: package_install 
+      loop: "{{ package }}"
+      when: ansible_os_family == "RedHat"  
+
+
+    - name: print for development 
+      debug: 
+        var: package_install  
+
+    - name: if package failed install new 
+      yum: 
+        name: "{{ item }}"
+        state: present 
+      when: package_install.failed == true
+      loop: 
+        - httpd
+        - samba
+
+
